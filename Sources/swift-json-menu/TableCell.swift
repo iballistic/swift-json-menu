@@ -209,7 +209,7 @@ public func convertValue(value: Double, fromUnit: String, toUnit: String)->Doubl
     if to != from{
         return nil
     }
-    let converterClass = NSClassFromString("swift-json-menu.\(from.rawValue)") as! NSObject.Type
+    let converterClass = NSClassFromString("swift_json_menu.\(from.rawValue)") as! NSObject.Type
     let converter = converterClass.init() as! IConverter
     return converter.convert(value: value, fromUnit: fromUnit, toUnit: toUnit)
 }
