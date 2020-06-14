@@ -6,7 +6,7 @@ final class swift_json_menuTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(swift_json_menu().text, "Hello, World!")
+        XCTAssertEqual(swift_json_menu().text, "Swift Json Menu")
     }
     
     func testMenuItemObjectCreation(){
