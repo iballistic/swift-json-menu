@@ -1,6 +1,6 @@
 //
-//  ConversionWrapper.swift
-//  JSonMenu
+//  ConversionHelper.swift
+//  swift-json-menu
 //
 //  Created by Telman Rustam on 2017-06-24.
 //  Copyright © 2017 Telman Rustam. All rights reserved.
@@ -8,15 +8,16 @@
 
 import Foundation
 
+@available(OSX 10.12, *)
 public extension UnitMass{
- @objc static var grain : UnitMass{
+    @objc static var grain : UnitMass{
         //1kg is 15432.3584 grain
         //6.4799e-5
         return UnitMass(symbol: "gr",converter: UnitConverterLinear(coefficient: 6.4799e-5))
     }
 }
 
-
+@available(OSX 10.12, *)
 public extension UnitSpeed{
 @objc static var footPerSecond : UnitSpeed{
         return UnitSpeed(symbol: "ft/s",converter: UnitConverterLinear(coefficient: 0.3048))
@@ -30,6 +31,7 @@ public class IConverter : NSObject{
     }
 }
 
+@available(OSX 10.12, *)
 @objcMembers
 public class UnitMassConverter : IConverter{
     //need to look into the following
@@ -42,6 +44,8 @@ public class UnitMassConverter : IConverter{
         return converted.value
     }
 }
+
+@available(OSX 10.12, *)
 @objcMembers
 public class UnitSpeedConverter : IConverter{
     public override func convert(value: Double, fromUnit: String, toUnit: String) -> Double?{
@@ -50,6 +54,8 @@ public class UnitSpeedConverter : IConverter{
         return converted.value
     }
 }
+
+@available(OSX 10.12, *)
 @objcMembers
 public class UnitTemperatureConverter : IConverter{
     public override func convert(value: Double, fromUnit: String, toUnit: String) -> Double?{
@@ -58,6 +64,7 @@ public class UnitTemperatureConverter : IConverter{
         return converted.value
     }
 }
+@available(OSX 10.12, *)
 @objcMembers
 public class UnitLengthConverter : IConverter{
     public override func convert(value: Double, fromUnit: String, toUnit: String) -> Double?{
@@ -66,6 +73,8 @@ public class UnitLengthConverter : IConverter{
         return converted.value
     }
 }
+
+@available(OSX 10.12, *)
 @objcMembers
 public class UnitPressureConverter : IConverter{
     public override func convert(value: Double, fromUnit: String, toUnit: String) -> Double?{

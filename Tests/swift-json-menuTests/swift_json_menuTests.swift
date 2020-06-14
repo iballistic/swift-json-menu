@@ -6,7 +6,7 @@ final class swift_json_menuTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(swift_json_menu().text, "Hello, World!")
+        XCTAssertEqual(swift_json_menu().text, "Swift Json Menu")
     }
     
     func testMenuItemObjectCreation(){
@@ -42,9 +42,9 @@ final class swift_json_menuTests: XCTestCase {
         
         
         
-        print("default value \(menuItem.defaultValue?.value)")
+        print("default value \(String(describing: menuItem.defaultValue?.value))")
         
-        print("sorted  value \(menuItem.sortedValue?.first?.value)")
+        print("sorted  value \(String(describing: menuItem.sortedValue?.first?.value))")
         
         
         //convert values
@@ -55,7 +55,7 @@ final class swift_json_menuTests: XCTestCase {
         print("converted values")
         
         for citem in convertedValue!{
-            print(citem.value)
+            print(citem.value ?? "")
         }
         
         

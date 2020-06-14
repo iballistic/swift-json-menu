@@ -1,3 +1,3 @@
 struct swift_json_menu {
-    var text = "Hello, World!"
+    var text = "Swift Json Menu"
 }

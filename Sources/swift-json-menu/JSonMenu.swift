@@ -1,6 +1,6 @@
 //
-//  JSonMenuController.swift
-//  JSonMenu
+//  JSonMenu.swift
+//  swift-json-menu
 //
 //  Created by Telman Rustam on 2017-07-03.
 //  Copyright © 2017 Telman Rustam. All rights reserved.

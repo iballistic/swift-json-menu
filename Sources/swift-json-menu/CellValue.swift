@@ -1,6 +1,6 @@
 //
 //  CellValue.swift
-//  JSonMenu
+//  swift-json-menu
 //
 //  Created by Telman Rustam on 2017-06-18.
 //  Copyright © 2017 Telman Rustam. All rights reserved.
