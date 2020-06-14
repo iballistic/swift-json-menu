@@ -42,9 +42,9 @@ final class swift_json_menuTests: XCTestCase {
         
         
         
-        print("default value \(menuItem.defaultValue?.value)")
+        print("default value \(String(describing: menuItem.defaultValue?.value))")
         
-        print("sorted  value \(menuItem.sortedValue?.first?.value)")
+        print("sorted  value \(String(describing: menuItem.sortedValue?.first?.value))")
         
         
         //convert values
@@ -55,7 +55,7 @@ final class swift_json_menuTests: XCTestCase {
         print("converted values")
         
         for citem in convertedValue!{
-            print(citem.value)
+            print(citem.value ?? "")
         }
         
         
