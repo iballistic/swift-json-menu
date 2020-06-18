@@ -13,11 +13,11 @@ import Foundation
 
 public class JSonMenu : NSObject{
     
-    var storyboard : [Storyboard]?
-    var section : [TableSection]?
-    var cell : [TableCell]?
-    var mapping : [Mapping]?
-    var view : [MappingView]?
+    private var storyboard : [Storyboard]?
+    private var section : [TableSection]?
+    private var cell : [TableCell]?
+    private var mapping : [Mapping]?
+    private var view : [MappingView]?
     
     
     public init(storyboard: [Storyboard]?, section: [TableSection]?, cell: [TableCell]?, mapping: [Mapping]?){
@@ -105,23 +105,23 @@ public class JSonMenu : NSObject{
 extension JSonMenu{
    public convenience init(json: [String: Any]){
         self.init()
-        guard let storyboards = json["storyboard"] as? [Any] else{
+        guard let storyboardItems = json["storyboard"] as? [Any] else{
             return
         }
         
-        guard let sections = json["section"] as? [Any] else{
+        guard let sectionItems = json["section"] as? [Any] else{
             return
         }
-        guard let cells = json["cells"] as? [Any] else{
+        guard let cellItems = json["cells"] as? [Any] else{
             return
         }
-        guard let mappings = json["mapping"] as? [Any] else{
+        guard let mapItems = json["mapping"] as? [Any] else{
             return
         }
         
         //parse storyboards
         self.storyboard = []
-        for storyboardItem in storyboards{
+        for storyboardItem in storyboardItems{
             let boardObj = Storyboard(json: (storyboardItem as? [String:Any])!)
             self.storyboard?.insert(boardObj, at: 0)
         }
@@ -129,21 +129,21 @@ extension JSonMenu{
         
         //parse sections
         self.section = []
-        for sectionItem in sections{
+        for sectionItem in sectionItems{
             let sectionObj = TableSection(json: (sectionItem as? [String:Any])!)
             self.section?.insert(sectionObj, at: 0)
         }
         
         //parse table cell
         self.cell = []
-        for cellItem in cells{
+        for cellItem in cellItems{
             let cellObj = TableCell(json: (cellItem as? [String:Any])!)
             self.cell?.insert(cellObj, at: 0)
         }
         
         //parse mapping
         self.mapping = []
-        for mapItem in mappings{
+        for mapItem in mapItems{
             let cellObj = Mapping(json: (mapItem as? [String:Any])!)
             self.mapping?.insert(cellObj, at: 0)
         }
@@ -169,5 +169,26 @@ extension JSonMenu{
             
         }
         
+    }
+}
+
+extension JSonMenu {
+    
+    public var Sections:  [TableSection]? {
+        get {
+            return self.section
+        }
+    }
+    
+    public var Storyboards: [Storyboard]? {
+        get {
+            return self.storyboard
+        }
+    }
+    
+    public var Cells : [TableCell]? {
+        get {
+            return self.cell
+        }
     }
 }
