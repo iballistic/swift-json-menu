@@ -16,6 +16,15 @@ public extension UnitMass{
         return UnitMass(symbol: "gr",converter: UnitConverterLinear(coefficient: 6.4799e-5))
     }
 }
+//note: pounds convertion is supported by default
+//however UnitMass.value(forKey: "pounds") as! UnitMass throws an exception
+//for that reason we are declaring here it again
+@available(OSX 10.12, *)
+public extension UnitMass{
+    @objc static var pounds : UnitMass{
+        return UnitMass(symbol: "lb",converter: UnitConverterLinear(coefficient: 0.453592))
+    }
+}
 
 @available(OSX 10.12, *)
 public extension UnitSpeed{
