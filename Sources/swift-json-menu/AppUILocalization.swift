@@ -133,7 +133,7 @@ public struct AppUILocalization {
             return value
         }
         
-        guard let properValue = Double(value) else{
+        guard let properValue = value.doubleValue else{
             return value
         }
         
