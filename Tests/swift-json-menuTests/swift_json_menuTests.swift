@@ -9,6 +9,26 @@ final class swift_json_menuTests: XCTestCase {
         XCTAssertEqual(swift_json_menu().text, "Swift Json Menu")
     }
     
+    func testStringToDouble(){
+        
+        let stringValue1 = "5,2"
+        let stringValue2 = "5.2"
+        if let value1 = stringValue1.doubleValue{
+            print(value1)
+            
+        }else{
+            XCTFail()
+        }
+        
+        if let value2 = stringValue2.doubleValue{
+            print(value2)
+        }else
+        {
+            XCTFail()
+        }
+        
+    }
+    
     func testMenuItemObjectCreation(){
         let menuItem = TableCell()
         menuItem.key = "name"
@@ -64,5 +84,6 @@ final class swift_json_menuTests: XCTestCase {
 
     static var allTests = [
         ("testMenuItemObjectCreation", testMenuItemObjectCreation),
+        ("testStringToDouble", testStringToDouble)
     ]
 }

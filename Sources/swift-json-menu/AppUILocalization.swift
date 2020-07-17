@@ -180,6 +180,24 @@ public struct AppUILocalization {
 }
 
 
+//https://stackoverflow.com/questions/28313871/swift-playground-how-to-convert-a-string-with-comma-to-a-string-with-decimal
+extension String {
+    static let numberFormatter = NumberFormatter()
+    var doubleValue: Double? {
+        String.numberFormatter.decimalSeparator = "."
+        if let result =  String.numberFormatter.number(from: self) {
+            return result.doubleValue
+        } else {
+            String.numberFormatter.decimalSeparator = ","
+            if let result = String.numberFormatter.number(from: self) {
+                return result.doubleValue
+            }
+        }
+        return nil
+    }
+}
+
+
 
 
 
