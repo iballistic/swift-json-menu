@@ -91,7 +91,7 @@ public struct AppUILocalization {
             return value
         }
         
-        guard let properValue = Double(value) else{
+        guard let properValue = value.doubleValue else{
             return value
         }
         
@@ -181,7 +181,7 @@ public struct AppUILocalization {
 
 
 //https://stackoverflow.com/questions/28313871/swift-playground-how-to-convert-a-string-with-comma-to-a-string-with-decimal
-extension String {
+public extension String {
     static let numberFormatter = NumberFormatter()
     var doubleValue: Double? {
         String.numberFormatter.decimalSeparator = "."
