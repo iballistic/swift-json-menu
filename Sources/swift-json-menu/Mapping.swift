@@ -38,7 +38,7 @@ extension Mapping{
 }
 
 
-public struct MappingView{
+public struct MappingView : Hashable{
     public var storyboard : Storyboard?
     public var section : TableSection?
     public var cell : TableCell?
