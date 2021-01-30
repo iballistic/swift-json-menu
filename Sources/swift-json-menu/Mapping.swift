@@ -9,7 +9,7 @@
 import Foundation
 
 
-public struct Mapping{
+public struct Mapping : Hashable{
     
     public var storyboard : String?
     public var section : String?
