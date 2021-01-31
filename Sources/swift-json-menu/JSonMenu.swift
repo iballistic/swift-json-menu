@@ -16,11 +16,11 @@ public class JSonMenu : NSObject{
     private var storyboard : [Storyboard]?
     private var section : [TableSection]?
     private var cell : [TableCell]?
-    private var mapping : [Mapping]?
+    private var mapping : [RelationalMapping]?
     private var view : [RelationalView]?
     
     
-    public init(storyboard: [Storyboard]?, section: [TableSection]?, cell: [TableCell]?, mapping: [Mapping]?){
+    public init(storyboard: [Storyboard]?, section: [TableSection]?, cell: [TableCell]?, mapping: [RelationalMapping]?){
         
         self.storyboard = storyboard
         self.section = section
@@ -146,24 +146,26 @@ extension JSonMenu{
         //parse mapping
         self.mapping = []
         for mapItem in mapItems{
-            let cellObj = Mapping(json: (mapItem as? [String:Any])!)
+            let cellObj = RelationalMapping(json: (mapItem as? [String:Any])!)
             self.mapping?.insert(cellObj, at: 0)
         }
         
         //create a relational view
         self.view = []
         for map in self.mapping!{
+            // mapping must use a valid story board
             let filteredStoryboard = self.storyboard?.filter({ (item: Storyboard) -> Bool in
                 return (map.storyboard?.lowercased() == item.name?.lowercased())
             })
-            
+            // mapping must use a valid section
             let filteredSection = self.section?.filter({ (item: TableSection) -> Bool in
                 return (map.section?.lowercased() == item.name.lowercased())
             })
-            
+            // mapping must use a valid cell config
             let filteredCell = self.cell?.filter({ (item: TableCell) -> Bool in
                 return (map.cell?.lowercased() == item.key.lowercased())
             })
+            // now we can try to build relational view
             if let storyboardItem = filteredStoryboard?.first, let sectionItem = filteredSection?.first, let cellItem = filteredCell?.first{
                 let relationalMap = RelationalView(storyboard: storyboardItem , section: sectionItem, cell: cellItem, order: map.order , readonly: map.readonly)
                 self.view?.insert(relationalMap, at: 0)
@@ -234,11 +236,12 @@ extension JSonMenu {
         }
     }
     
-    public var Mapping : [Mapping]? {
+    public var Mappings : [RelationalMapping]? {
         get {
             return self.mapping
         }
     }
+    
 }
 
 

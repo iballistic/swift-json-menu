@@ -13,13 +13,14 @@
 import Foundation
 
 
-@objcMembers public class Mapping : NSObject{
+@objcMembers public class RelationalMapping : NSObject{
     
     public var storyboard : String?
     public var section : String?
     public var cell : String?
     public var order: NSInteger?
     public var readonly : Bool?
+    
     public init(storyboard: String, section: String?, cell: String?, order: NSInteger?, readonly: Bool?){
         
         self.storyboard = storyboard
@@ -30,7 +31,7 @@ import Foundation
     }
 }
 
-extension Mapping{
+extension RelationalMapping{
     public convenience init(json: [String: Any]){
         let storyboard = json["storyboard"] as? String
         let section = json["section"] as? String

@@ -97,18 +97,18 @@ final class swift_json_menuTests: XCTestCase {
 
         """#
         
-//        do{
-//            let jsonMenu = try JSonMenu(jsonString: content, encoding: .utf8)
-//            
-//            XCTAssertEqual(jsonMenu.Storyboards!.count, 1)
-//            XCTAssertEqual(jsonMenu.Sections!.count, 3)
-//            XCTAssertEqual(jsonMenu.Cells!.count, 2)
-////            XCTAssertEqual(jsonMenu.!.count, 2)
-//            
-//        }catch{
-//            print("Error: \(error)")
-//        }
-//        
+        do{
+            let jsonMenu = try JSonMenu(jsonString: content, encoding: .utf8)
+            
+            XCTAssertEqual(jsonMenu.Storyboards!.count, 1)
+            XCTAssertEqual(jsonMenu.Sections!.count, 3)
+            XCTAssertEqual(jsonMenu.Cells!.count, 2)
+            XCTAssertEqual(jsonMenu.Mappings!.count, 1)
+            
+        }catch{
+            print("Error: \(error)")
+        }
+        
         
         
     }
