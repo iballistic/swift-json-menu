@@ -29,46 +29,85 @@ final class swift_json_menuTests: XCTestCase {
         
     }
     
-    func testJsonMenu(){
-        let fileContent : String = """
+    func testJsonMenuFromString(){
+        let content : String = #"""
         {
-        "storyboard": [
-        {
-         "name": "foodmenu",
-         "comment": "Food menu",
-         "title": "Food menu"
-        },
-        "section": [
-         {
-             "name": "breakfast",
-             "order" : 10,
-             "header": "Breakfast",
-             "footer": ""
-         },
-         "cells": [{
-             "format": "",
-             "key": "tea",
-             "title": "Tea flavor",
-             "celltype": "CellString",
-             "placeholder": "Enter Tea flavors",
-             "values": [{
-             "value": "orange pekoe",
-             "type": "default"
-            }],
-         }],
-         "mapping": [
-             {
-             "storyboard": "foodmenu",
-             "section": "breakfast",
-             "cell": "tea",
-             "readonly": false,
-             "order": 0
-         }]
-        """
+            "storyboard": [
+                {
+                    "name": "foodmenu",
+                    "comment": "Food menu",
+                    "title": "Food menu"
+                }
+            ],
+            "section": [
+                {
+                    "name": "breakfast",
+                    "order" : 10,
+                    "header": "Breakfast",
+                    "footer": ""
+                },
+                {
+                    "name": "lunch",
+                    "order" : 10,
+                    "header": "Lunch",
+                    "footer": ""
+                },
+                {
+                    "name": "dinner",
+                    "order" : 30,
+                    "header": "Dinner",
+                    "footer": ""
+                }
+            ],
+            "cells": [
+                {
+                    "format": "",
+                    "key": "tea",
+                    "title": "Tea flavor",
+                    "celltype": "CellString",
+                    "placeholder": "Enter Tea flavors",
+                    "values": [{
+                        "value": "orange pekoe",
+                        "type": "default"
+                    }]
+                },
+                {
+                    "format": "",
+                    "key": "juice",
+                    "title": "Juice",
+                    "celltype": "CellString",
+                    "placeholder": "Juice kind",
+                    "values": [{
+                        "value": "orange",
+                        "type": "default"
+                    }]
+                }
+            ],
+            "mapping": [
+                {
+                    "storyboard": "foodmenu",
+                    "section": "breakfast",
+                    "cell": "tea",
+                    "readonly": false,
+                    "order": 0
+                }
+            ]
+        }
+
+
+        """#
         
-//        let data = fileContent.data(using: .utf8)
-//        let jsonMenu = JSonMenu(json: <#T##[String : Any]#>)
-//        print(data)
+        do{
+            let jsonMenu = try JSonMenu(jsonString: content, encoding: .utf8)
+            
+            XCTAssertEqual(jsonMenu.Sections!.count, 3)
+            
+        }catch{
+            print("Error: \(error)")
+        }
+        
+        
+        
     }
     
     func testTableSection(){

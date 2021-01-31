@@ -56,7 +56,7 @@ public class JSonMenu : NSObject{
         }
         return items
         
-
+        
     }
     
     public func View(forStoryboard: String, forSection: String) ->[RelationalView]?{
@@ -103,19 +103,19 @@ public class JSonMenu : NSObject{
 }
 
 extension JSonMenu{
-   public convenience init(json: [String: Any]){
+    public convenience init(collection: [String: Any]){
         self.init()
-        guard let storyboardItems = json["storyboard"] as? [Any] else{
+        guard let storyboardItems = collection["storyboard"] as? [Any] else{
             return
         }
         
-        guard let sectionItems = json["section"] as? [Any] else{
+        guard let sectionItems = collection["section"] as? [Any] else{
             return
         }
-        guard let cellItems = json["cells"] as? [Any] else{
+        guard let cellItems = collection["cells"] as? [Any] else{
             return
         }
-        guard let mapItems = json["mapping"] as? [Any] else{
+        guard let mapItems = collection["mapping"] as? [Any] else{
             return
         }
         
@@ -172,6 +172,46 @@ extension JSonMenu{
     }
 }
 
+extension JSonMenu{
+    public convenience init(jsonString : String, encoding : String.Encoding) throws{
+        
+        do{
+            let data = jsonString.data(using: encoding)
+            let collection = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String:Any] //NSMutableDictionary
+            self.init(collection: collection)
+            return
+        }
+        
+        
+        catch{
+            throw JSonMenuError.JsonParseError(error: "\(error)")
+            self.init()
+        }
+        
+        
+    }
+}
+
+extension JSonMenu{
+    public convenience init(jsonFilePath : String) throws{
+        
+        do{
+            let content = try? String.init(contentsOfFile: jsonFilePath)
+            if let jsonString = content{
+                try self.init(jsonString: jsonString, encoding: .utf8)
+                return
+            }
+            
+        }
+        catch{
+            throw JSonMenuError.FileParseError(error: "\(error)")
+        }
+        
+        self.init()
+    }
+}
+
+
 extension JSonMenu {
     
     public var Sections:  [TableSection]? {
@@ -192,3 +232,5 @@ extension JSonMenu {
         }
     }
 }
+
+

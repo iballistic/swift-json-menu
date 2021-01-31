@@ -8,4 +8,5 @@
 import Foundation
 enum JSonMenuError : Error{
     case FileParseError (error: String)
+    case JsonParseError (error: String)
 }
