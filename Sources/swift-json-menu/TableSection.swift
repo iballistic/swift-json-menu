@@ -16,7 +16,7 @@ import Foundation
     public var footer : String?
     public var order: NSInteger?
     
-    init(name: String, header: String?, footer: String?, order: NSInteger?){
+    public init(name: String, header: String?, footer: String?, order: NSInteger?){
         
         self.name = name
         self.header = header
@@ -26,7 +26,7 @@ import Foundation
 }
 
 extension TableSection{
-    convenience init(json: [String: Any]){
+    public convenience init(json: [String: Any]){
         let name = json["name"] as? String
         let header = json["header"] as? String
         let footer = json["footer"] as? String

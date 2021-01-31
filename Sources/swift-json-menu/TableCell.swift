@@ -219,7 +219,7 @@ public func convertValue(value: Double, fromUnit: String, toUnit: String)->Doubl
 extension TableCell{
     
     
-    convenience init(json: [String: Any]?) {
+    public convenience init(json: [String: Any]?) {
         
         
         self.init()

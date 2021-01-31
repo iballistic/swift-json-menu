@@ -29,6 +29,14 @@ final class swift_json_menuTests: XCTestCase {
         
     }
     
+    func testTableSection(){
+        let section = TableSection(name: "Name1", header: "Header1", footer: "Footer1", order: 10)
+        
+        XCTAssertEqual ("Name1", section.name)
+        
+        
+    }
+    
     func testMenuItemObjectCreation(){
         let menuItem = TableCell()
         menuItem.key = "name"
