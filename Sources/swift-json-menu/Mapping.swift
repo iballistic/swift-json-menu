@@ -8,14 +8,12 @@
 // Mapping is defined in the Json file to build a relation between
 //
 //
-/*
 
- */
 
 import Foundation
 
 
-public struct Mapping : Hashable{
+@objcMembers public class Mapping : NSObject{
     
     public var storyboard : String?
     public var section : String?
@@ -33,7 +31,7 @@ public struct Mapping : Hashable{
 }
 
 extension Mapping{
-    public init(json: [String: Any]){
+    public convenience init(json: [String: Any]){
         let storyboard = json["storyboard"] as? String
         let section = json["section"] as? String
         let cell = json["cell"] as? String

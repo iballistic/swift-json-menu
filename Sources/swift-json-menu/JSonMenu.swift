@@ -104,7 +104,9 @@ public class JSonMenu : NSObject{
 
 extension JSonMenu{
     public convenience init(collection: [String: Any]){
+        
         self.init()
+        
         guard let storyboardItems = collection["storyboard"] as? [Any] else{
             return
         }
@@ -229,6 +231,12 @@ extension JSonMenu {
     public var Cells : [TableCell]? {
         get {
             return self.cell
+        }
+    }
+    
+    public var Mapping : [Mapping]? {
+        get {
+            return self.mapping
         }
     }
 }
