@@ -9,39 +9,7 @@
 //
 //
 /*
- {
- "storyboard": [
- {
-     "name": "foodmenu",
-     "comment": "Food menu",
-     "title": "Food menu"
- },
- "section": [
- {
- "name": "breakfast",
- "order" : 10,
- "header": "Breakfast",
- "footer": ""
- },
- "cells": [{
-     "format": "",
-     "key": "tea",
-     "title": "Tea flavor",
-     "celltype": "CellString",
-     "placeholder": "Enter Tea flavors",
-     "values": [{
-     "value": "orange pekoe",
-     "type": "default"
-    }],
- }],
- "mapping": [
-     {
-     "storyboard": "foodmenu",
-     "section": "breakfast",
-     "cell": "tea",
-     "readonly": false,
-     "order": 0
- }]
+
  */
 
 import Foundation

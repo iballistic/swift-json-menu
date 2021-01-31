@@ -17,7 +17,7 @@ public class JSonMenu : NSObject{
     private var section : [TableSection]?
     private var cell : [TableCell]?
     private var mapping : [Mapping]?
-    private var view : [MappingView]?
+    private var view : [RelationalView]?
     
     
     public init(storyboard: [Storyboard]?, section: [TableSection]?, cell: [TableCell]?, mapping: [Mapping]?){
@@ -34,11 +34,11 @@ public class JSonMenu : NSObject{
     
     public func Section(forStoryboard: String) ->[TableSection]?{
         
-        let filtered = self.view?.filter({ (map: MappingView) -> Bool in
+        let filtered = self.view?.filter({ (map: RelationalView) -> Bool in
             return (map.storyboard?.name?.lowercased() == forStoryboard.lowercased())
         })
         
-        let sorted = filtered?.sorted(by: { (item1 : MappingView, item2: MappingView) -> Bool in
+        let sorted = filtered?.sorted(by: { (item1 : RelationalView, item2: RelationalView) -> Bool in
             return ((item1.section?.order!)! > (item2.section?.order!)!)
         })
         
@@ -59,28 +59,28 @@ public class JSonMenu : NSObject{
 
     }
     
-    public func View(forStoryboard: String, forSection: String) ->[MappingView]?{
+    public func View(forStoryboard: String, forSection: String) ->[RelationalView]?{
         
-        let filtered = self.view?.filter({ (map: MappingView) -> Bool in
+        let filtered = self.view?.filter({ (map: RelationalView) -> Bool in
             return (map.storyboard?.name?.lowercased() == forStoryboard.lowercased() && map.section?.name.lowercased() == forSection.lowercased())
         })
         
         
-        let sorted = filtered?.sorted(by: { (item1 : MappingView, item2: MappingView) -> Bool in
+        let sorted = filtered?.sorted(by: { (item1 : RelationalView, item2: RelationalView) -> Bool in
             return (item1.order! < item2.order!)
         })
         
         return sorted
     }
     
-    public func View(forStoryboard: String) ->[MappingView]?{
+    public func View(forStoryboard: String) ->[RelationalView]?{
         
-        let filtered = self.view?.filter({ (map: MappingView) -> Bool in
+        let filtered = self.view?.filter({ (map: RelationalView) -> Bool in
             return (map.storyboard?.name?.lowercased() == forStoryboard.lowercased())
         })
         
         
-        let sorted = filtered?.sorted(by: { (item1 : MappingView, item2: MappingView) -> Bool in
+        let sorted = filtered?.sorted(by: { (item1 : RelationalView, item2: RelationalView) -> Bool in
             return (item1.order! < item2.order!)
         })
         
@@ -163,7 +163,7 @@ extension JSonMenu{
                 return (map.cell?.lowercased() == item.key.lowercased())
             })
             if let storyboardItem = filteredStoryboard?.first, let sectionItem = filteredSection?.first, let cellItem = filteredCell?.first{
-                let relationalMap = MappingView(storyboard: storyboardItem , section: sectionItem, cell: cellItem, order: map.order , readonly: map.readonly)
+                let relationalMap = RelationalView(storyboard: storyboardItem , section: sectionItem, cell: cellItem, order: map.order , readonly: map.readonly)
                 self.view?.insert(relationalMap, at: 0)
             }
             

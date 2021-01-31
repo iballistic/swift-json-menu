@@ -1,5 +1,5 @@
 //
-//  MappingView.swift
+//  RelationalView.swift
 //  
 //
 //  Created by Telman Rustam on 2021-01-31.
@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct MappingView : Hashable{
+public struct RelationalView : Hashable{
     public var storyboard : Storyboard?
     public var section : TableSection?
     public var cell : TableCell?

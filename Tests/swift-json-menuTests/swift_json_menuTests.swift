@@ -29,6 +29,48 @@ final class swift_json_menuTests: XCTestCase {
         
     }
     
+    func testJsonMenu(){
+        let fileContent : String = """
+        {
+        "storyboard": [
+        {
+         "name": "foodmenu",
+         "comment": "Food menu",
+         "title": "Food menu"
+        },
+        "section": [
+         {
+             "name": "breakfast",
+             "order" : 10,
+             "header": "Breakfast",
+             "footer": ""
+         },
+         "cells": [{
+             "format": "",
+             "key": "tea",
+             "title": "Tea flavor",
+             "celltype": "CellString",
+             "placeholder": "Enter Tea flavors",
+             "values": [{
+             "value": "orange pekoe",
+             "type": "default"
+            }],
+         }],
+         "mapping": [
+             {
+             "storyboard": "foodmenu",
+             "section": "breakfast",
+             "cell": "tea",
+             "readonly": false,
+             "order": 0
+         }]
+        """
+        
+//        let data = fileContent.data(using: .utf8)
+//        let jsonMenu = JSonMenu(json: <#T##[String : Any]#>)
+//        print(data)
+    }
+    
     func testTableSection(){
         let section = TableSection(name: "Name1", header: "Header1", footer: "Footer1", order: 10)
         
@@ -89,7 +131,7 @@ final class swift_json_menuTests: XCTestCase {
         
         
     }
-
+    
     static var allTests = [
         ("testMenuItemObjectCreation", testMenuItemObjectCreation),
         ("testStringToDouble", testStringToDouble)
