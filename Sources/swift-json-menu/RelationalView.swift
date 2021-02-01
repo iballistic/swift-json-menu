@@ -8,7 +8,7 @@
 import Foundation
 
 
-public class RelationalView : NSObject{
+@objcMembers public class RelationalView : NSObject{
     public var storyboard : Storyboard?
     public var section : TableSection?
     public var cell : TableCell?

@@ -32,6 +32,10 @@ public class JSonMenu : NSObject{
         
     }
     
+    
+    /// A helper method to get all configured sections based on the mapping in the json file
+    /// - Parameter forStoryboard: <#forStoryboard description#>
+    /// - Returns: <#description#>
     public func Section(forStoryboard: String) ->[TableSection]?{
         
         let filtered = self.view?.filter({ (map: RelationalView) -> Bool in
@@ -73,6 +77,10 @@ public class JSonMenu : NSObject{
         return sorted
     }
     
+    
+    /// A helper method to get relational view based on the mapping confugration is the json file
+    /// - Parameter forStoryboard: Name of the story board that view will be filtered on
+    /// - Returns: An optional array of RelationalView
     public func View(forStoryboard: String) ->[RelationalView]?{
         
         let filtered = self.view?.filter({ (map: RelationalView) -> Bool in
@@ -88,6 +96,9 @@ public class JSonMenu : NSObject{
     }
     
     
+    /// Returns a single cell config by key
+    /// - Parameter byKey: byKey is the key name of a cell
+    /// - Returns: first elment in the array of cell config ( usualy there should be only one cell with the same key)
     public func Cell(byKey: String) -> TableCell? {
         
         guard let cells = self.cell else{

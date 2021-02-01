@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Value unit configuration of a cell
 @objcMembers public class ValueUnit : NSObject {
     
     public var name: String?

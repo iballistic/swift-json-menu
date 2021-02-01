@@ -105,6 +105,17 @@ final class swift_json_menuTests: XCTestCase {
             XCTAssertEqual(jsonMenu.Cells!.count, 2)
             XCTAssertEqual(jsonMenu.Mappings!.count, 1)
             
+            let view = jsonMenu.View(forStoryboard: "foodmenu")
+            XCTAssertEqual(view?.count, 1)
+            if let relations = view{
+                for relation in relations{
+                    XCTAssertEqual(relation.storyboard?.name, "foodmenu")
+                    XCTAssertEqual(relation.section?.name, "breakfast")
+                    XCTAssertNotEqual(relation.section?.name, "lunch")
+                }
+            }
+                
+            
         }catch{
             print("Error: \(error)")
         }
