@@ -8,13 +8,14 @@
 
 import Foundation
 
+/// Value unit configuration of a cell
 @objcMembers public class ValueUnit : NSObject {
     
     public var name: String?
     public var symbol: String?
     public var option: ConversionOption?
     
-    init(name: String?, option: ConversionOption?, symbol: String?) {
+    public init(name: String?, option: ConversionOption?, symbol: String?) {
         self.name = name
         self.option = option
         self.symbol = symbol
@@ -23,7 +24,7 @@ import Foundation
 }
 
 extension ValueUnit{
-    convenience init(json: [String: Any]){
+    public convenience init(json: [String: Any]){
         let name = json["name"] as! String
         let option = json["type"] as! String
         let symbol = json["symbol"] as! String

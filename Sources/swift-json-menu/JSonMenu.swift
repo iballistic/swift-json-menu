@@ -16,11 +16,11 @@ public class JSonMenu : NSObject{
     private var storyboard : [Storyboard]?
     private var section : [TableSection]?
     private var cell : [TableCell]?
-    private var mapping : [Mapping]?
-    private var view : [MappingView]?
+    private var mapping : [RelationalMapping]?
+    private var view : [RelationalView]?
     
     
-    public init(storyboard: [Storyboard]?, section: [TableSection]?, cell: [TableCell]?, mapping: [Mapping]?){
+    public init(storyboard: [Storyboard]?, section: [TableSection]?, cell: [TableCell]?, mapping: [RelationalMapping]?){
         
         self.storyboard = storyboard
         self.section = section
@@ -32,13 +32,17 @@ public class JSonMenu : NSObject{
         
     }
     
+    
+    /// A helper method to get all configured sections based on the mapping in the json file
+    /// - Parameter forStoryboard: <#forStoryboard description#>
+    /// - Returns: <#description#>
     public func Section(forStoryboard: String) ->[TableSection]?{
         
-        let filtered = self.view?.filter({ (map: MappingView) -> Bool in
+        let filtered = self.view?.filter({ (map: RelationalView) -> Bool in
             return (map.storyboard?.name?.lowercased() == forStoryboard.lowercased())
         })
         
-        let sorted = filtered?.sorted(by: { (item1 : MappingView, item2: MappingView) -> Bool in
+        let sorted = filtered?.sorted(by: { (item1 : RelationalView, item2: RelationalView) -> Bool in
             return ((item1.section?.order!)! > (item2.section?.order!)!)
         })
         
@@ -56,31 +60,35 @@ public class JSonMenu : NSObject{
         }
         return items
         
-
+        
     }
     
-    public func View(forStoryboard: String, forSection: String) ->[MappingView]?{
+    public func View(forStoryboard: String, forSection: String) ->[RelationalView]?{
         
-        let filtered = self.view?.filter({ (map: MappingView) -> Bool in
+        let filtered = self.view?.filter({ (map: RelationalView) -> Bool in
             return (map.storyboard?.name?.lowercased() == forStoryboard.lowercased() && map.section?.name.lowercased() == forSection.lowercased())
         })
         
         
-        let sorted = filtered?.sorted(by: { (item1 : MappingView, item2: MappingView) -> Bool in
+        let sorted = filtered?.sorted(by: { (item1 : RelationalView, item2: RelationalView) -> Bool in
             return (item1.order! < item2.order!)
         })
         
         return sorted
     }
     
-    public func View(forStoryboard: String) ->[MappingView]?{
+    
+    /// A helper method to get relational view based on the mapping confugration is the json file
+    /// - Parameter forStoryboard: Name of the story board that view will be filtered on
+    /// - Returns: An optional array of RelationalView
+    public func View(forStoryboard: String) ->[RelationalView]?{
         
-        let filtered = self.view?.filter({ (map: MappingView) -> Bool in
+        let filtered = self.view?.filter({ (map: RelationalView) -> Bool in
             return (map.storyboard?.name?.lowercased() == forStoryboard.lowercased())
         })
         
         
-        let sorted = filtered?.sorted(by: { (item1 : MappingView, item2: MappingView) -> Bool in
+        let sorted = filtered?.sorted(by: { (item1 : RelationalView, item2: RelationalView) -> Bool in
             return (item1.order! < item2.order!)
         })
         
@@ -88,6 +96,9 @@ public class JSonMenu : NSObject{
     }
     
     
+    /// Returns a single cell config by key
+    /// - Parameter byKey: byKey is the key name of a cell
+    /// - Returns: first elment in the array of cell config ( usualy there should be only one cell with the same key)
     public func Cell(byKey: String) -> TableCell? {
         
         guard let cells = self.cell else{
@@ -103,19 +114,21 @@ public class JSonMenu : NSObject{
 }
 
 extension JSonMenu{
-   public convenience init(json: [String: Any]){
+    public convenience init(collection: [String: Any]){
+        
         self.init()
-        guard let storyboardItems = json["storyboard"] as? [Any] else{
+        
+        guard let storyboardItems = collection["storyboard"] as? [Any] else{
             return
         }
         
-        guard let sectionItems = json["section"] as? [Any] else{
+        guard let sectionItems = collection["section"] as? [Any] else{
             return
         }
-        guard let cellItems = json["cells"] as? [Any] else{
+        guard let cellItems = collection["cells"] as? [Any] else{
             return
         }
-        guard let mapItems = json["mapping"] as? [Any] else{
+        guard let mapItems = collection["mapping"] as? [Any] else{
             return
         }
         
@@ -144,26 +157,28 @@ extension JSonMenu{
         //parse mapping
         self.mapping = []
         for mapItem in mapItems{
-            let cellObj = Mapping(json: (mapItem as? [String:Any])!)
+            let cellObj = RelationalMapping(json: (mapItem as? [String:Any])!)
             self.mapping?.insert(cellObj, at: 0)
         }
         
         //create a relational view
         self.view = []
         for map in self.mapping!{
+            // mapping must use a valid story board
             let filteredStoryboard = self.storyboard?.filter({ (item: Storyboard) -> Bool in
                 return (map.storyboard?.lowercased() == item.name?.lowercased())
             })
-            
+            // mapping must use a valid section
             let filteredSection = self.section?.filter({ (item: TableSection) -> Bool in
                 return (map.section?.lowercased() == item.name.lowercased())
             })
-            
+            // mapping must use a valid cell config
             let filteredCell = self.cell?.filter({ (item: TableCell) -> Bool in
                 return (map.cell?.lowercased() == item.key.lowercased())
             })
+            // now we can try to build relational view
             if let storyboardItem = filteredStoryboard?.first, let sectionItem = filteredSection?.first, let cellItem = filteredCell?.first{
-                let relationalMap = MappingView(storyboard: storyboardItem , section: sectionItem, cell: cellItem, order: map.order , readonly: map.readonly)
+                let relationalMap = RelationalView(storyboard: storyboardItem , section: sectionItem, cell: cellItem, order: map.order , readonly: map.readonly)
                 self.view?.insert(relationalMap, at: 0)
             }
             
@@ -171,6 +186,46 @@ extension JSonMenu{
         
     }
 }
+
+extension JSonMenu{
+    public convenience init(jsonString : String, encoding : String.Encoding) throws{
+        
+        do{
+            let data = jsonString.data(using: encoding)
+            let collection = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String:Any] //NSMutableDictionary
+            self.init(collection: collection)
+            return
+        }
+        
+        
+        catch{
+            throw JSonMenuError.JsonParseError(error: "\(error)")
+            self.init()
+        }
+        
+        
+    }
+}
+
+extension JSonMenu{
+    public convenience init(jsonFilePath : String) throws{
+        
+        do{
+            let content = try? String.init(contentsOfFile: jsonFilePath)
+            if let jsonString = content{
+                try self.init(jsonString: jsonString, encoding: .utf8)
+                return
+            }
+            
+        }
+        catch{
+            throw JSonMenuError.FileParseError(error: "\(error)")
+        }
+        
+        self.init()
+    }
+}
+
 
 extension JSonMenu {
     
@@ -191,4 +246,13 @@ extension JSonMenu {
             return self.cell
         }
     }
+    
+    public var Mappings : [RelationalMapping]? {
+        get {
+            return self.mapping
+        }
+    }
+    
 }
+
+

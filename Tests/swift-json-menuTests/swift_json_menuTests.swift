@@ -29,6 +29,109 @@ final class swift_json_menuTests: XCTestCase {
         
     }
     
+    func testJsonMenuFromString(){
+        let content : String = #"""
+        {
+            "storyboard": [
+                {
+                    "name": "foodmenu",
+                    "comment": "Food menu",
+                    "title": "Food menu"
+                }
+            ],
+            "section": [
+                {
+                    "name": "breakfast",
+                    "order" : 10,
+                    "header": "Breakfast",
+                    "footer": ""
+                },
+                {
+                    "name": "lunch",
+                    "order" : 10,
+                    "header": "Lunch",
+                    "footer": ""
+                },
+                {
+                    "name": "dinner",
+                    "order" : 30,
+                    "header": "Dinner",
+                    "footer": ""
+                }
+            ],
+            "cells": [
+                {
+                    "format": "",
+                    "key": "tea",
+                    "title": "Tea flavor",
+                    "celltype": "CellString",
+                    "placeholder": "Enter Tea flavors",
+                    "values": [{
+                        "value": "orange pekoe",
+                        "type": "default"
+                    }]
+                },
+                {
+                    "format": "",
+                    "key": "juice",
+                    "title": "Juice",
+                    "celltype": "CellString",
+                    "placeholder": "Juice kind",
+                    "values": [{
+                        "value": "orange",
+                        "type": "default"
+                    }]
+                }
+            ],
+            "mapping": [
+                {
+                    "storyboard": "foodmenu",
+                    "section": "breakfast",
+                    "cell": "tea",
+                    "readonly": false,
+                    "order": 0
+                }
+            ]
+        }
+
+
+        """#
+        
+        do{
+            let jsonMenu = try JSonMenu(jsonString: content, encoding: .utf8)
+            
+            XCTAssertEqual(jsonMenu.Storyboards!.count, 1)
+            XCTAssertEqual(jsonMenu.Sections!.count, 3)
+            XCTAssertEqual(jsonMenu.Cells!.count, 2)
+            XCTAssertEqual(jsonMenu.Mappings!.count, 1)
+            
+            let view = jsonMenu.View(forStoryboard: "foodmenu")
+            XCTAssertEqual(view?.count, 1)
+            if let relations = view{
+                for relation in relations{
+                    XCTAssertEqual(relation.storyboard?.name, "foodmenu")
+                    XCTAssertEqual(relation.section?.name, "breakfast")
+                    XCTAssertNotEqual(relation.section?.name, "lunch")
+                }
+            }
+                
+            
+        }catch{
+            print("Error: \(error)")
+        }
+        
+        
+        
+    }
+    
+    func testTableSection(){
+        let section = TableSection(name: "Name1", header: "Header1", footer: "Footer1", order: 10)
+        
+        XCTAssertEqual ("Name1", section.name)
+        
+        
+    }
+    
     func testMenuItemObjectCreation(){
         let menuItem = TableCell()
         menuItem.key = "name"
@@ -81,7 +184,7 @@ final class swift_json_menuTests: XCTestCase {
         
         
     }
-
+    
     static var allTests = [
         ("testMenuItemObjectCreation", testMenuItemObjectCreation),
         ("testStringToDouble", testStringToDouble)
